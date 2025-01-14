@@ -1,0 +1,103 @@
+<div class="blank-layout-container justify-content-center">
+  <div class="auth-wrapper">
+    <div class="position-relative shaper-wrapper">
+      <div class="w-100 position-relative rounded bg-white auth-card">
+        <div class="auth-body">
+          
+          <a [routerLink]="['/dashboards/dashboard1']" class="m-t-20 d-flex">
+            <img src="./assets/images/logos/dark-logo.svg" class="align-middle m-2" alt="logo" />
+          </a>
+          
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="align-items-center justify-content-center d-none d-lg-flex">
+                <img src="/assets/images/backgrounds/login3-bg.png" alt="login" style="max-width: 500px" />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="d-flex align-items-start align-items-lg-center justify-content-center">
+                <div class="row justify-content-center w-100">
+                  <div class="col-lg-11">
+                    <h4 class="f-w-700 f-s-30 lh-base m-0">
+                      Bienvenue sur Tawelti Admin
+                    </h4>
+                    <span class="f-s-14 d-block mat-body-1 m-t-8">Votre tableau de bord administrateur</span>
+
+                    <div class="or-border m-t-30"> s'inscrire avec</div>
+
+                    <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
+                      <!-- Restaurant Name -->
+                      <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nom du restaurant</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput formControlName="restaurantName" />
+                        <mat-hint *ngIf="f['restaurantName'].touched && f['restaurantName'].invalid">
+                          <div class="text-error" *ngIf="f['restaurantName'].errors?.['required']">
+                            Le nom du restaurant est requis.
+                          </div>
+                        </mat-hint>
+                      </mat-form-field>
+
+                      <!-- Owner Name -->
+                      <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nom du propriétaire</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput formControlName="ownerName" />
+                        <mat-hint *ngIf="f['ownerName'].touched && f['ownerName'].invalid">
+                          <div class="text-error" *ngIf="f['ownerName'].errors?.['required']">
+                            Le nom est requis.
+                          </div>
+                          <div class="text-error" *ngIf="f['ownerName'].errors?.['minlength']">
+                            Le nom doit comporter au moins 6 caractères.
+                          </div>
+                        </mat-hint>
+                      </mat-form-field>
+
+                      <!-- Owner Email -->
+                      <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Adresse e-mail</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="email" formControlName="ownerEmail" />
+                        <mat-hint *ngIf="f['ownerEmail'].touched && f['ownerEmail'].invalid">
+                          <div class="text-error" *ngIf="f['ownerEmail'].errors?.['required']">
+                            L'e-mail est requis.
+                          </div>
+                          <div class="text-error" *ngIf="f['ownerEmail'].errors?.['email']">
+                            Veuillez entrer un e-mail valide.
+                          </div>
+                        </mat-hint>
+                      </mat-form-field>
+
+                      <!-- Password -->
+                      <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Mot de passe</mat-label>
+                      <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input matInput type="password" formControlName="password" />
+                        <mat-hint *ngIf="f['password'].touched && f['password'].invalid">
+                          <div class="text-error" *ngIf="f['password'].errors?.['required']">
+                            Le mot de passe est requis.
+                          </div>
+                          <div class="text-error" *ngIf="f['password'].errors?.['minlength']">
+                            Le mot de passe doit comporter au moins 8 caractères.
+                          </div>
+                        </mat-hint>
+                      </mat-form-field>
+                      
+
+                      <button mat-flat-button color="primary" class="w-100" [disabled]="!form.valid">
+                        S'inscrire
+                      </button>
+                    </form>
+
+                    <span class="d-block f-w-500 d-block m-t-24">
+                      Vous avez déjà un compte ?
+                      <a [routerLink]="['/authentication/login']" class="text-decoration-none text-primary f-w-500 f-s-14">
+                        Se connecter
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+ /* side-register.component.scss */
+.mat-form-field .mat-hint {
+    color: red !important; /* Force the color of the error hint to be red */
+  }
+  
+  .text-error {
+    color: red !important; /* Ensure the error message text is red */
+    font-size: 12px;
+    margin-top: -15px;
+  }
+  
+  .mat-form-field {
+    margin-bottom: 20px; /* Add spacing between form fields */
+  }
+  
+  button {
+    margin-top: 20px;
+  }
+  
+  .mat-form-field .mat-error {
+    color: red; /* Make the error text inside the form field red */
+  }
+  
