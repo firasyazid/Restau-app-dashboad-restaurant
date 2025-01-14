@@ -1,0 +1,235 @@
+<mat-card class="cardWithShadow">
+    <mat-card-header class="p-t-24">
+      <div class="d-flex align-items-center justify-content-between w-100">
+        <div class="flex-grow-1 d-flex justify-content-center">
+          <mat-card-title>Informations du Restaurant</mat-card-title>
+        </div>
+      </div>
+    </mat-card-header>
+  
+    <mat-card-content class="p-t-0 p-b-10 mb-20" *ngIf="restaurantData; else loading">
+      <div class="table-responsive">
+        <table mat-table [dataSource]="[restaurantData]" class="w-100">
+  
+          <!-- ✅ Restaurant Name -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nom du Restaurant</th>
+            <td mat-cell *matCellDef="let restaurant"> {{ restaurant.name }} </td>
+          </ng-container>
+  
+          <!-- ✅ Restaurant Logo -->
+          <ng-container matColumnDef="logo">
+            <th mat-header-cell *matHeaderCellDef>Logo</th>
+            <td mat-cell *matCellDef="let restaurant">
+              <img *ngIf="restaurant.logo; else noLogo" [src]="restaurant.logo" alt="Restaurant Logo" class="restaurant-logo" />
+              <ng-template #noLogo><span class="text-muted">Aucun logo</span></ng-template>
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Restaurant Link -->
+          <ng-container matColumnDef="uri">
+            <th mat-header-cell *matHeaderCellDef>Link</th>
+            <td mat-cell *matCellDef="let restaurant">
+              <a [href]="'http://www.tawelti.com/' + restaurant.uri" target="_blank">{{ restaurant.uri }}</a>
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Owner -->
+          <ng-container matColumnDef="owner">
+            <th mat-header-cell *matHeaderCellDef>Propriétaire</th>
+            <td mat-cell *matCellDef="let restaurant">
+              {{ restaurant.owner?.username || 'N/A' }}
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Number of Tables -->
+          <ng-container matColumnDef="numberOfTables">
+            <th mat-header-cell *matHeaderCellDef>Tables</th>
+            <td mat-cell *matCellDef="let restaurant">
+              {{ restaurant.numberOfTables }}
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Status -->
+          <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef>Statut</th>
+            <td mat-cell *matCellDef="let restaurant">
+              <mat-chip [color]="restaurant.isActive ? 'primary' : 'warn'">
+                {{ restaurant.isActive ? 'Actif' : 'Inactif' }}
+              </mat-chip>
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Update Menu -->
+          <ng-container matColumnDef="updteamenu">
+            <th mat-header-cell *matHeaderCellDef>Mettre à jour le menu</th>
+            <td mat-cell *matCellDef="let restaurant">
+              <mat-chip [color]="restaurant.updteamenu ? 'primary' : 'warn'">
+                {{ restaurant.updteamenu ? 'Oui' : 'Non' }}
+              </mat-chip>
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Users -->
+          <ng-container matColumnDef="users">
+            <th mat-header-cell *matHeaderCellDef>Utilisateurs</th>
+            <td mat-cell *matCellDef="let restaurant">
+              <div *ngIf="restaurant.users?.length > 0; else noUsers">
+                <mat-chip-listbox>
+                  <mat-chip *ngFor="let user of restaurant.users">
+                    {{ user.userId.name }} ({{ user.role }}) <span class="text-muted">({{ user.userId.email }})</span>
+                  </mat-chip>
+                </mat-chip-listbox>
+              </div>
+              <ng-template #noUsers>
+                <span class="text-muted">Aucun utilisateur</span>
+              </ng-template>
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Customers -->
+          <ng-container matColumnDef="customers">
+            <th mat-header-cell *matHeaderCellDef>Clients</th>
+            <td mat-cell *matCellDef="let restaurant">
+              <div *ngIf="restaurant.customers?.length > 0; else noCustomers">
+                <ul>
+                  <li *ngFor="let customer of restaurant.customers">
+                    {{ customer.name }}
+                  </li>
+                </ul>
+              </div>
+              <ng-template #noCustomers>
+                <span class="text-muted">Aucun client enregistré</span>
+              </ng-template>
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Menu -->
+          <ng-container matColumnDef="menu">
+            <th mat-header-cell *matHeaderCellDef>Menu</th>
+            <td mat-cell *matCellDef="let restaurant">
+              <span *ngIf="restaurant.menu; else noMenu">
+                {{ restaurant.menu.items.join(', ') }}
+              </span>
+              <ng-template #noMenu><span class="text-muted">Aucun menu disponible</span></ng-template>
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Created At -->
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef>Créé le</th>
+            <td mat-cell *matCellDef="let restaurant">
+              {{ restaurant.createdAt | date:'dd/MM/yyyy' }}
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Actions -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let restaurant">
+             <!-- ✅ Update Button -->
+<button mat-icon-button color="primary" (click)="openDialog()">
+    <mat-icon>edit</mat-icon>
+</button>
+  
+<button mat-raised-button color="primary" (click)="openDialog2()">Ajouter un Utilisateur</button>
+
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  
+        </table>
+      </div>
+    </mat-card-content>
+  
+    <!-- Loading Template -->
+    <ng-template #loading>
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Chargement des informations...</p>
+      </div>
+    </ng-template>
+  </mat-card>
+  
+
+
+
+
+  <!-- ✅ Update Logo Dialog -->
+<div class="dialog-overlay" *ngIf="isDialogOpen">
+    <div class="dialog-container">
+      <h2 class="dialog-title">Modifier le Logo du Restaurant</h2>
+  
+      <!-- ✅ Current Logo Preview -->
+      <div *ngIf="restaurantData?.logo">
+        <p>Logo actuel:</p>
+        <img [src]="restaurantData?.logo" alt="Logo actuel" class="restaurant-logo-preview"/>
+      </div>
+  
+      <!-- ✅ File Upload Field -->
+      <div class="file-upload-container">
+        <label for="fileInput" class="file-upload-label">
+          <span class="upload-icon">📁</span> Sélectionner un nouveau logo
+        </label>
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" class="file-upload-input" accept="image/*" />
+      </div>
+  
+      <!-- ✅ Show Selected File -->
+      <div *ngIf="selectedFile" class="selected-file">
+        <p><strong>Fichier sélectionné:</strong> {{ selectedFile.name }}</p>
+      </div>
+  
+      <!-- ✅ Actions -->
+      <div class="dialog-actions">
+        <button mat-button (click)="closeDialog()">Annuler</button>
+        <button mat-raised-button color="primary" (click)="uploadLogo()" [disabled]="!selectedFile">
+          Mettre à jour
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- ✅ ADD ADMIN -->
+  <!-- ✅ ADD ADMIN -->
+<div class="dialog-overlay" *ngIf="isDialogOpen2">
+  <div class="dialog-container">
+    <h2 class="dialog-title">Ajouter un Admin</h2>
+
+    <!-- ✅ FORM: All fields should be inside -->
+    <form [formGroup]="adminForm">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Rôle</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="admin">Admin</mat-option>
+          <mat-option value="server">Serveur</mat-option>
+          <mat-option value="chef">Chef</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Nom d'utilisateur</mat-label>
+        <input matInput formControlName="username" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput type="password" formControlName="password" required />
+      </mat-form-field>
+
+      <div class="dialog-actions">
+        <button mat-button (click)="closeDialog2()">Annuler</button>
+        <button mat-raised-button color="primary" (click)="addAdmin()" [disabled]="adminForm.invalid">
+          Ajouter
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

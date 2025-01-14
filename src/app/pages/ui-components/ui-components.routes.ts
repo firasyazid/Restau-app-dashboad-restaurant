@@ -8,6 +8,8 @@ import { AppMenuComponent } from './menu/menu.component';
 import { AppTooltipsComponent } from './tooltips/tooltips.component';
 import { AppFormsComponent } from './forms/forms.component';
 import { AppTablesComponent } from './tables/tables.component';
+import { RestaurantInfoComponent } from 'src/app/components/restaurant-info/restaurant-info.component';
+
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -16,7 +18,12 @@ export const UiComponentsRoutes: Routes = [
       {
         path: 'badge',
         component: AppBadgeComponent,
-      },
+      }, 
+      {
+          path: 'restaurant-info',
+          component: RestaurantInfoComponent,
+
+       },
       {
         path: 'chips',
         component: AppChipsComponent,

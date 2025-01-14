@@ -63,7 +63,9 @@ export class AppSideLoginComponent {
          if (response.user && response.user.restaurant && response.user.restaurant.id) {
           this.authService.setRestaurantId(response.user.restaurant.id);
         }
-  
+        if (response.user && response.user.role) {
+          this.authService.setUserRole(response.user.role);
+        }
          this.router.navigate(['/dashboard']);
       },
       (error) => {

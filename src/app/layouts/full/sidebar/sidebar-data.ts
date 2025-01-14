@@ -13,12 +13,14 @@ export const navItems: NavItem[] = [
   {
     navCap: 'Ui Components',
   },
+  
+
   {
-    displayName: 'Badge',
-    iconName: 'rosette',
-    bgcolor: 'accent',
-    route: '/ui-components/badge',
-  },
+    displayName: 'Restaurant-Info',
+    iconName: 'tools-kitchen-2',
+    bgcolor: 'success',
+    route: '/ui-components/restaurant-info',
+  }, 
   {
     displayName: 'Chips',
     iconName: 'poker-chip',

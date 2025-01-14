@@ -32,12 +32,19 @@ export class AuthService {
     
     this.startAutoLogout();
   }
-
+  setUserRole(role: string): void {
+    localStorage.setItem('userRole', role);
+  }
+  
+  // ✅ Get User Role
+  getUserRole(): string | null {
+    return localStorage.getItem('userRole');
+  }
   startAutoLogout(): void {
-    const threeHours = 3 * 60 * 60 * 1000;  // 3 hours in milliseconds
+    const threeHours = 3 * 60 * 60 * 1000;   
 
     setTimeout(() => {
-      this.logout();  // Logout the user after 3 hours
+      this.logout();  
     }, threeHours);
   }
   checkSessionExpiration(): void {
@@ -45,15 +52,14 @@ export class AuthService {
 
     if (loginTime) {
       const currentTime = new Date().getTime();
-      const elapsedTime = currentTime - parseInt(loginTime, 10);  // Time since login
+      const elapsedTime = currentTime - parseInt(loginTime, 10);  
 
-      const threeHours = 3 * 60 * 60 * 1000;  // 3 hours
+      const threeHours = 3 * 60 * 60 * 1000;   
 
       if (elapsedTime >= threeHours) {
-        this.logout();  // Auto logout if session expired
+        this.logout();  
       } else {
-        // Schedule logout for remaining time
-        setTimeout(() => {
+         setTimeout(() => {
           this.logout();
         }, threeHours - elapsedTime);
       }
@@ -68,7 +74,7 @@ export class AuthService {
 
   // Store Restaurant ID
   setRestaurantId(restaurantId: string): void {
-    sessionStorage.setItem('restaurantId', restaurantId); // Use sessionStorage for temporary storage
+    sessionStorage.setItem('restaurantId', restaurantId);  
   }
 
   // Get Restaurant ID
@@ -81,8 +87,8 @@ export class AuthService {
   // ✅ Logout Function
   logout(): void {
     localStorage.removeItem('authToken');
-    localStorage.removeItem('loginTime');  // Remove login time
-    this.router.navigate(['/authentication/login']);  // Redirect to login
+    localStorage.removeItem('loginTime');   
+    this.router.navigate(['/authentication/login']);  
   }
 
 }
