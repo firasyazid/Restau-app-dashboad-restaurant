@@ -21,6 +21,15 @@ export const navItems: NavItem[] = [
     bgcolor: 'success',
     route: '/ui-components/restaurant-info',
   }, 
+
+  {
+    displayName: 'Menu Categories',
+    iconName: 'category-2',
+    bgcolor: 'success',
+    route: '/ui-components/category-form',
+  }, 
+
+
   {
     displayName: 'Chips',
     iconName: 'poker-chip',

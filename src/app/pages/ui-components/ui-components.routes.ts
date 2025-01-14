@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-
-// ui
 import { AppBadgeComponent } from './badge/badge.component';
 import { AppChipsComponent } from './chips/chips.component';
 import { AppListsComponent } from './lists/lists.component';
@@ -9,6 +7,7 @@ import { AppTooltipsComponent } from './tooltips/tooltips.component';
 import { AppFormsComponent } from './forms/forms.component';
 import { AppTablesComponent } from './tables/tables.component';
 import { RestaurantInfoComponent } from 'src/app/components/restaurant-info/restaurant-info.component';
+import { CategoryFormComponent } from 'src/app/components/category-form/category-form.component';
 
 
 export const UiComponentsRoutes: Routes = [
@@ -22,6 +21,11 @@ export const UiComponentsRoutes: Routes = [
       {
           path: 'restaurant-info',
           component: RestaurantInfoComponent,
+
+       },
+       { 
+            path : 'category-form',
+            component : CategoryFormComponent
 
        },
       {

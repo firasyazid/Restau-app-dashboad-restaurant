@@ -1,1 +1,97 @@
-<p>category-form works!</p>
+<mat-card class="cardWithShadow">
+    <mat-card-header class="p-t-24">
+      <div class="d-flex align-items-center justify-content-between w-100">
+        <div class="flex-grow-1 d-flex justify-content-center">
+          <mat-card-title>Catégories du Menu</mat-card-title>
+                </div>
+      </div>
+   
+     </mat-card-header>
+     <div style="text-align: left;">
+        <button mat-raised-button color="primary" (click)="openDialog()" style="width: 170px; height: 50px;">
+          Ajouter une Catégorie
+        </button>
+      </div>  
+  
+    <mat-card-content class="p-t-0 p-b-10 mb-20" *ngIf="categoryData.length > 0; else loading">
+      <div class="table-responsive">
+        <table mat-table [dataSource]="categoryData" class="w-100">
+          
+          <!-- ✅ Category Name -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nom de la Catégorie</th>
+            <td mat-cell *matCellDef="let category">{{ category.name }}</td>
+          </ng-container>
+  
+          <!-- ✅ Number of Dishes -->
+          <ng-container matColumnDef="dishes">
+            <th mat-header-cell *matHeaderCellDef>Nombre de Plats</th>
+            <td mat-cell *matCellDef="let category">
+              {{ category.dishes?.length || 0 }}
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Created At -->
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef>Créé le</th>
+            <td mat-cell *matCellDef="let category">
+              {{ category.createdAt | date:'dd/MM/yyyy' }}
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Actions -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let category">
+              <!-- ✅ Update Button -->
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <!-- ✅ Delete Button -->
+              <button mat-icon-button color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          <!-- ✅ Header & Row Definitions -->
+          <tr mat-header-row *matHeaderRowDef="['name', 'dishes', 'createdAt', 'actions']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['name', 'dishes', 'createdAt', 'actions']"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  
+    <!-- ✅ Loading Template -->
+    <ng-template #loading>
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Chargement des catégories...</p>
+      </div>
+    </ng-template>
+  
+    <!-- ✅ Button to Open Category Creation Dialog -->
+  
+      
+        </mat-card>
+  
+  <!-- ✅ Add Category Dialog -->
+  <div class="dialog-overlay" *ngIf="isDialogOpen">
+    <div class="dialog-container">
+      <h2 class="dialog-title">Ajouter une Catégorie</h2>
+  
+      <form [formGroup]="categoryForm">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nom de la Catégorie</mat-label>
+          <input matInput formControlName="name" required />
+        </mat-form-field>
+  
+        <div class="dialog-actions">
+          <button mat-button (click)="closeDialog()">Annuler</button>
+          <button mat-raised-button color="primary" (click)="addCategory()" [disabled]="categoryForm.invalid">
+            Ajouter
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

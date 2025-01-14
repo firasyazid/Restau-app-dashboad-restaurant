@@ -34,15 +34,10 @@ export class RestaurantInfoComponent implements OnInit {
     'name', 'logo', 'uri', 'owner', 'numberOfTables', 'isActive', 
     'updteamenu', 'users', 'customers', 'menu', 'createdAt', 'actions'
   ]; 
-
   adminForm: FormGroup;
-
   isDialogOpen2: boolean = false;
-
-
   selectedFile: File | null = null;
   isDialogOpen: boolean = false;  
-
 
   constructor(
 
