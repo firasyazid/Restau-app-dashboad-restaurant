@@ -29,6 +29,12 @@ export const navItems: NavItem[] = [
     route: '/ui-components/category-form',
   }, 
 
+  {
+    displayName: 'Plats',
+    iconName: 'soup',
+    bgcolor: 'success',
+    route: '/ui-components/plats',
+  }, 
 
   {
     displayName: 'Chips',

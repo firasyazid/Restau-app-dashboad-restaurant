@@ -8,6 +8,7 @@ import { AppFormsComponent } from './forms/forms.component';
 import { AppTablesComponent } from './tables/tables.component';
 import { RestaurantInfoComponent } from 'src/app/components/restaurant-info/restaurant-info.component';
 import { CategoryFormComponent } from 'src/app/components/category-form/category-form.component';
+import { DishComponent } from 'src/app/components/dish/dish.component';
 
 
 export const UiComponentsRoutes: Routes = [
@@ -27,6 +28,10 @@ export const UiComponentsRoutes: Routes = [
             path : 'category-form',
             component : CategoryFormComponent
 
+       },
+       {
+           path : 'plats',
+           component : DishComponent
        },
       {
         path: 'chips',

@@ -44,11 +44,15 @@
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let category">
               <!-- ✅ Update Button -->
-              <button mat-icon-button color="primary">
+              <button mat-icon-button color="primary" 
+              (click)="openEditDialog(category)"
+              >
                 <mat-icon>edit</mat-icon>
               </button>
               <!-- ✅ Delete Button -->
-              <button mat-icon-button color="warn">
+              <button mat-icon-button color="warn" 
+                (click)="deleteCategory(category._id)"
+              >
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
@@ -64,8 +68,7 @@
     <!-- ✅ Loading Template -->
     <ng-template #loading>
       <div class="loading-container">
-        <mat-spinner></mat-spinner>
-        <p>Chargement des catégories...</p>
+         <p>  catégories vide ...</p>
       </div>
     </ng-template>
   
@@ -95,3 +98,35 @@
     </div>
   </div>
   
+
+ 
+
+  <!-- ✅ Edit Category Dialog -->
+<!-- ✅ Edit Category Dialog -->
+<div class="dialog-overlay" *ngIf="isEditDialogOpen">
+  <div class="dialog-container">
+    <h2 class="dialog-title">Modifier la Catégorie</h2>
+
+    <form [formGroup]="categoryForm">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Nom de la Catégorie</mat-label>
+        <input matInput formControlName="name" required />
+      </mat-form-field>
+
+      <!-- ✅ Show Validation Error -->
+      <p *ngIf="categoryForm.controls['name'].invalid && categoryForm.controls['name'].touched" class="text-danger">
+        Le nom de la catégorie doit contenir au moins 3 caractères.
+      </p>
+
+      <div class="dialog-actions">
+        <button mat-button (click)="closeEditDialog()">Annuler</button>
+        <button mat-raised-button color="primary" (click)="saveCategoryUpdate()" 
+                [disabled]="categoryForm.invalid">
+          Sauvegarder
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+

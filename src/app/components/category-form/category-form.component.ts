@@ -31,6 +31,10 @@ export class CategoryFormComponent implements OnInit {
   categoryForm: FormGroup;
   restaurantId: string | null = null;
 
+isEditDialogOpen: boolean = false;
+selectedCategoryId: string | null = null;
+newCategoryName: string = '';
+
   constructor(
     private categoryService: CategoryService,
     private fb: FormBuilder,
@@ -46,6 +50,8 @@ export class CategoryFormComponent implements OnInit {
     if (this.restaurantId) {
       this.fetchCategoryDetails();
     }
+
+    
   }
 
   getRestaurantId(): void {
@@ -58,6 +64,7 @@ export class CategoryFormComponent implements OnInit {
     this.categoryService.getCategories(this.restaurantId).subscribe({
       next: (data: Category[]) => {
         this.categoryData = data;
+        console.log('Categories:', this.categoryData);
        },
       error: (err) => {
         console.error('Error fetching categories:', err);
@@ -85,6 +92,7 @@ export class CategoryFormComponent implements OnInit {
         this.categoryData.push(response.category);
         this.showSnackbar("Catégorie ajoutée avec succès !", "success");
         this.closeDialog();
+        this.fetchCategoryDetails();
       },
       error: (err) => {
         console.error('Erreur lors de l’ajout de la catégorie:', err);
@@ -99,4 +107,56 @@ export class CategoryFormComponent implements OnInit {
       panelClass: type === 'success' ? 'snackbar-success' : 'snackbar-error'
     });
   }
+
+  deleteCategory(categoryId: string): void {
+    if (!this.restaurantId) return;
+
+    if (confirm('Voulez-vous vraiment supprimer cette catégorie ?')) {
+      this.categoryService.deleteCategory(this.restaurantId, categoryId).subscribe({
+        next: (response) => {
+           this.categoryData = this.categoryData.filter(category => category._id !== categoryId);
+          this.showSnackbar("Catégorie Supprimé", "success");
+        },
+        error: (err) => {
+          console.error('Erreur lors de la suppression de la catégorie:', err);
+          this.showSnackbar("Erreur lors de la suppression de la catégorie.", "error");
+        }
+      });
+    }
+  }
+
+   // ✅ Open Edit Dialog
+   openEditDialog(category: Category): void {
+    this.isEditDialogOpen = true;
+    this.selectedCategoryId = category._id;
+    this.categoryForm.patchValue({ name: category.name });
+  }
+
+  closeEditDialog(): void {
+    this.isEditDialogOpen = false;
+    this.selectedCategoryId = null;
+    this.categoryForm.reset();
+  }
+
+  saveCategoryUpdate(): void {
+    if (!this.selectedCategoryId || this.categoryForm.invalid || !this.restaurantId) return;
+
+    const newName = this.categoryForm.value.name.trim();
+    
+    this.categoryService.updateCategory(this.restaurantId, this.selectedCategoryId, newName).subscribe({
+      next: (response) => {
+        // ✅ Update category in UI
+        const updatedCategory = this.categoryData.find(cat => cat._id === this.selectedCategoryId);
+        if (updatedCategory) updatedCategory.name = newName;
+
+        this.showSnackbar(response.message, "success");
+        this.closeEditDialog();
+      },
+      error: (err) => {
+        console.error('Erreur lors de la mise à jour de la catégorie:', err);
+        this.showSnackbar("Erreur lors de la mise à jour de la catégorie.", "error");
+      }
+    });
+  }
+
 }

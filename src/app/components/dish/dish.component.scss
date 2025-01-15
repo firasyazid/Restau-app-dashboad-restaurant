@@ -1,0 +1,122 @@
+ /* ✅ Style général */
+.cardWithShadow {
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  /* ✅ Style du bouton "Ajouter un Plat" */
+  .add-dish-container {
+    display: flex;
+    justify-content: flex-start;
+    margin: 10px 16px;
+  }
+  
+  /* ✅ Style des images des plats */
+  .dish-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* ✅ Style des titres de catégorie */
+  .category-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+  
+  /* ✅ Gestion du texte en cas de contenu vide */
+  .text-muted {
+    color: gray;
+  }
+  
+  /* ✅ Conteneur de chargement */
+  .loading-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* ✅ Ajustement de la taille des tables */
+  table {
+    width: 100%;
+  }
+  
+  /* ✅ Gestion des boutons */
+  button {
+    font-size: 14px;
+  }
+  
+  /* ✅ Rendre la table défilable sur mobile */
+  .table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  
+  /* ✅ Media queries pour rendre le composant RESPONSIVE */
+  @media screen and (max-width: 768px) {
+    .cardWithShadow {
+      padding: 12px;
+    }
+  
+    .add-dish-container {
+      justify-content: center; /* Centrage du bouton sur mobile */
+      margin: 10px 0;
+    }
+  
+    .category-title {
+      font-size: 18px;
+      text-align: center;
+    }
+  
+    table {
+      font-size: 14px;
+    }
+  
+    th.mat-header-cell, td.mat-cell {
+      font-size: 12px;
+      padding: 6px;
+    }
+  
+    /* ✅ Ajustement des images */
+    .dish-image {
+      width: 50px;
+      height: 50px;
+    }
+  
+    /* ✅ Centrer les boutons d'action */
+    td.mat-cell {
+      text-align: center;
+    }
+  
+    /* ✅ Rendre la table défilable */
+    .table-responsive {
+      overflow-x: auto;
+      display: block;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .category-title {
+      font-size: 16px;
+    }
+  
+    table {
+      font-size: 12px;
+    }
+  
+    th.mat-header-cell, td.mat-cell {
+      font-size: 10px;
+      padding: 4px;
+    }
+  
+    /* ✅ Réduction des icônes */
+    .mat-icon {
+      font-size: 16px;
+    }
+  }
+  

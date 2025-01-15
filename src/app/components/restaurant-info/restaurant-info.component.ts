@@ -8,17 +8,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MaterialModule } from 'src/app/material.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
- import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
- 
+
 
 @Component({
   selector: 'app-restaurant-info',
   standalone: true,
-  imports: [  CommonModule,   
+  imports: [CommonModule,
     MatMenuModule,
-    MatButtonModule, 
+    MatButtonModule,
     MaterialModule,
     MatSnackBarModule,
     MatChipsModule,
@@ -29,26 +29,26 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class RestaurantInfoComponent implements OnInit {
   restaurantId: string | null = null;
-   restaurantData: Restaurant | null = null;  
-   displayedColumns: string[] = [
-    'name', 'logo', 'uri', 'owner', 'numberOfTables', 'isActive', 
+  restaurantData: Restaurant | null = null;
+  displayedColumns: string[] = [
+    'name', 'logo', 'uri', 'owner', 'numberOfTables', 'isActive',
     'updteamenu', 'users', 'customers', 'menu', 'createdAt', 'actions'
-  ]; 
+  ];
   adminForm: FormGroup;
   isDialogOpen2: boolean = false;
   selectedFile: File | null = null;
-  isDialogOpen: boolean = false;  
+  isDialogOpen: boolean = false;
 
   constructor(
 
-        private restaurantService: RestaurantService ,private fb: FormBuilder,    private snackBar: MatSnackBar,
+    private restaurantService: RestaurantService, private fb: FormBuilder, private snackBar: MatSnackBar,
 
-  ) { 
+  ) {
     this.adminForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      role: ['', Validators.required],  
+      role: ['', Validators.required],
     });
 
   }
@@ -57,7 +57,8 @@ export class RestaurantInfoComponent implements OnInit {
     this.getRestaurantId();
     if (this.restaurantId) {
       this.fetchRestaurantDetails();
-    }  }
+    }
+  }
 
   getRestaurantId(): void {
     this.restaurantId = sessionStorage.getItem('restaurantId');
@@ -76,8 +77,8 @@ export class RestaurantInfoComponent implements OnInit {
       },
     });
   }
-   
- 
+
+
 
 
   openDialog(): void {
@@ -101,10 +102,10 @@ export class RestaurantInfoComponent implements OnInit {
     this.restaurantService.updateRestaurantLogo(this.restaurantId, this.selectedFile).subscribe({
       next: (response) => {
         if (this.restaurantData) {
-          this.restaurantData.logo = response.restaurant.logo; 
+          this.restaurantData.logo = response.restaurant.logo;
         }
         this.selectedFile = null;
-        this.closeDialog(); 
+        this.closeDialog();
       },
       error: (err) => {
         console.error('Error updating logo:', err);
@@ -123,7 +124,7 @@ export class RestaurantInfoComponent implements OnInit {
   }
 
   addAdmin(): void {
-    const userRole = localStorage.getItem('userRole');  
+    const userRole = localStorage.getItem('userRole');
 
     if (userRole !== 'restaurantOwner') {
       this.showSnackbar("Accès refusé. Seuls les propriétaires de restaurant peuvent ajouter des administrateurs.", "error");
@@ -148,12 +149,7 @@ export class RestaurantInfoComponent implements OnInit {
         this.showSnackbar("Échec de l'ajout de l'admin. Veuillez réessayer.", "error");
       },
     });
-}
-
-
-
-
-
+  }
 
 
   showSnackbar(message: string, type: 'success' | 'error'): void {

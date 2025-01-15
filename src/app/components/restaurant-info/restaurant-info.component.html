@@ -104,16 +104,19 @@
             </td>
           </ng-container>
   
-          <!-- ✅ Menu -->
           <ng-container matColumnDef="menu">
             <th mat-header-cell *matHeaderCellDef>Menu</th>
             <td mat-cell *matCellDef="let restaurant">
-              <span *ngIf="restaurant.menu; else noMenu">
+              <span *ngIf="restaurant?.menu?.items?.length > 0; else noMenu">
                 {{ restaurant.menu.items.join(', ') }}
               </span>
-              <ng-template #noMenu><span class="text-muted">Aucun menu disponible</span></ng-template>
+              <ng-template #noMenu>
+                <span class="text-muted">Aucun menu disponible</span>
+              </ng-template>
             </td>
           </ng-container>
+            <!-- ✅ Menu -->
+         
   
           <!-- ✅ Created At -->
           <ng-container matColumnDef="createdAt">
