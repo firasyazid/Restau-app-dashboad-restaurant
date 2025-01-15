@@ -30,7 +30,7 @@ export const navItems: NavItem[] = [
   }, 
 
   {
-    displayName: 'Plats',
+    displayName: 'Menu',
     iconName: 'soup',
     bgcolor: 'success',
     route: '/ui-components/plats',
